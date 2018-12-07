@@ -16,6 +16,8 @@
 
 #include <linux/linkage.h>
 
+#include <asm/assembler.h>
+
 ENTRY(__ashlti3)
 	cbz	x2, 1f
 	mov	x3, #64
@@ -36,6 +38,7 @@ ENTRY(__ashlti3)
 	mov	x0, x2
 	ret
 ENDPROC(__ashlti3)
+EXPORT_SYMBOL(__ashlti3)
 
 ENTRY(__ashrti3)
 	cbz	x2, 1f
@@ -57,6 +60,7 @@ ENTRY(__ashrti3)
 	mov	x1, x2
 	ret
 ENDPROC(__ashrti3)
+EXPORT_SYMBOL(__ashrti3)
 
 ENTRY(__lshrti3)
 	cbz	x2, 1f
@@ -78,3 +82,4 @@ ENTRY(__lshrti3)
 	mov	x1, x2
 	ret
 ENDPROC(__lshrti3)
+EXPORT_SYMBOL(__lshrti3)
