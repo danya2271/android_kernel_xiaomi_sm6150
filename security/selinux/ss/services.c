@@ -2107,6 +2107,9 @@ bad:
 	context_destroy(newc);
 #endif
 	return 0;
+#else
+	return 0;
+#endif
 }
 
 static void security_load_policycaps(struct selinux_state *state)
