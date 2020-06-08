@@ -200,6 +200,11 @@ static void dsi_bridge_pre_enable(struct drm_bridge *bridge)
 	notify_data.id = MSM_DRM_PRIMARY_DISPLAY;
 	msm_drm_notifier_call_chain(MSM_DRM_EARLY_EVENT_BLANK, &notify_data);
 
+	power_mode = sde_connector_get_lp(c_bridge->display->drm_conn);
+	notify_data.data = &power_mode;
+	notify_data.id = MSM_DRM_PRIMARY_DISPLAY;
+	msm_drm_notifier_call_chain(MSM_DRM_EARLY_EVENT_BLANK, &notify_data);
+
 	/* By this point mode should have been validated through mode_fixup */
 	rc = dsi_display_set_mode(c_bridge->display,
 			&(c_bridge->dsi_mode), 0x0);
