@@ -230,6 +230,9 @@ static void *m_start(struct seq_file *m, loff_t *ppos)
 				       cpu_lp_mask);
 
 	down_read(&mm->mmap_sem);
+	sched_migrate_to_cpumask_start(to_cpumask(&priv->old_cpus_allowed),
+				       cpu_lp_mask);
+
 	hold_task_mempolicy(priv);
 	priv->tail_vma = get_gate_vma(mm);
 
