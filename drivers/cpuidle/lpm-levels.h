@@ -52,7 +52,7 @@ struct lpm_cpu {
 	uint32_t ref_premature_cnt;
 	uint32_t tmr_add;
 	bool lpm_prediction;
-	uint64_t bias;
+	bool ipi_prediction;
 	struct cpuidle_driver *drv;
 	struct lpm_cluster *parent;
 };
