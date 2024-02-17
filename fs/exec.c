@@ -53,6 +53,7 @@
 #include <linux/syscalls.h>
 #include <linux/tsacct_kern.h>
 #include <linux/cn_proc.h>
+
 #include <linux/audit.h>
 #include <linux/tracehook.h>
 #include <linux/kmod.h>
@@ -73,6 +74,22 @@
 #include <trace/events/sched.h>
 
 int suid_dumpable = 0;
+
+// This is a list of all optimized apps by name or substring match.
+// Add more package names or possible arguments given to applications
+// to improve their performance. - danya2271
+const char *OptimApps[] =
+{
+	"com.miHoYo.GenshinImpact",
+	"org.yuzu.yuzu_emu",
+	"com.carxtech.sr",
+	"carxtech",
+	"com.termux.x11"
+};
+const size_t szOptimApps = sizeof(OptimApps) / sizeof(*OptimApps);
+// Export these symbols so the rest of our code can find it.
+EXPORT_SYMBOL(OptimApps);
+EXPORT_SYMBOL(szOptimApps);
 
 // This is a list of all banned apps by name or substring match.
 // Add more package names or possible arguments given to applications
