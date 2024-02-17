@@ -166,7 +166,7 @@ static void spi_clock_set(struct gf_dev *gf_dev, int speed)
 {
 	long rate;
 	int rc;
-	rate = spi_clk_max_rate(gf_dev->core_clk, speed);
+	rate = spi_clk_max_rate(gf_dev->core_clk, speed) + 25000;
 
 	if (rate < 0) {
 		pr_debug("%s: no match found for requested clock frequency:%d",
@@ -263,7 +263,7 @@ static int gfspi_ioctl_clk_uninit(struct gf_dev *data)
 	return 0;
 }
 #endif
-
+#if defined(SUPPORT_NAV_EVENT)
 static void nav_event_input(struct gf_dev *gf_dev, gf_nav_event_t nav_event)
 {
 	uint32_t nav_input = 0;
@@ -329,7 +329,7 @@ static void nav_event_input(struct gf_dev *gf_dev, gf_nav_event_t nav_event)
 		input_sync(gf_dev->input);
 	}
 }
-
+#endif
 
 static void gf_kernel_key_input(struct gf_dev *gf_dev, struct gf_key *gf_key)
 {
