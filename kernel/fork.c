@@ -307,6 +307,11 @@ struct kmem_cache *vm_area_cachep;
 /* SLAB cache for mm_struct structures (tsk->mm) */
 static struct kmem_cache *mm_cachep;
 
+void vm_area_free(struct vm_area_struct *vma)
+{
+	kmem_cache_free(vm_area_cachep, vma);
+}
+
 static void account_kernel_stack(struct task_struct *tsk, int account)
 {
 	void *stack = task_stack_page(tsk);

@@ -155,7 +155,7 @@ extern int overcommit_kbytes_handler(struct ctl_table *, int, void __user *,
  * (from shared memory to executable loading to arbitrary
  * mmap() functions).
  */
-
+void vm_area_free(struct vm_area_struct *);
 extern struct kmem_cache *vm_area_cachep;
 
 #ifndef CONFIG_MMU
