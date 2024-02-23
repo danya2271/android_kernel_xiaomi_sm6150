@@ -57,7 +57,7 @@
 #define SWRM_COL_16    16
 
 /* pm runtime auto suspend timer in msecs */
-static int auto_suspend_timer = SWR_AUTO_SUSPEND_DELAY * 1000;
+static int auto_suspend_timer = SWR_AUTO_SUSPEND_DELAY * 200;
 module_param(auto_suspend_timer, int, 0664);
 MODULE_PARM_DESC(auto_suspend_timer, "timer for auto suspend");
 
