@@ -909,6 +909,7 @@ static int subsys_powerup(const struct subsys_desc *subsys)
 
 static int subsys_ramdump(int enable, const struct subsys_desc *subsys)
 {
+#if 0
 	struct pil_tz_data *d = subsys_to_data(subsys);
 
 	if (!enable)
@@ -918,6 +919,7 @@ static int subsys_ramdump(int enable, const struct subsys_desc *subsys)
 	return pil_do_ramdump(&d->desc, d->ramdump_dev, d->minidump_dev);
 #else
 	return pil_do_ramdump(&d->desc, d->ramdump_dev, NULL);
+#endif
 #endif
 }
 
@@ -1256,12 +1258,14 @@ static int pil_tz_driver_probe(struct platform_device *pdev)
 		}
 	}
 
+#if 0
 	d->ramdump_dev = create_ramdump_device(d->subsys_desc.name,
 								&pdev->dev);
 	if (!d->ramdump_dev) {
 		rc = -ENOMEM;
 		goto err_ramdump;
 	}
+#endif
 
 #ifdef CONFIG_QCOM_MINIDUMP
 	scnprintf(md_node, sizeof(md_node), "md_%s", d->subsys_desc.name);
