@@ -3197,6 +3197,11 @@ static int smblib_therm_charging(struct smb_charger *chg)
 
 	return rc;
 }
+#else
+static int smblib_therm_charging(struct smb_charger *chg)
+{
+	return 0;
+}
 #endif
 
 static void smblib_thermal_setting_work(struct work_struct *work)
