@@ -680,6 +680,11 @@
 				reg = <1>;
 				qcom,gmu-freq = <200000000>;
 			};
+
+			qcom,gmu-pwrlevel@2 {
+				reg = <2>;
+				qcom,gmu-freq = <400000000>;
+			};
 		};
 
 		gmu_user: gmu_user {
