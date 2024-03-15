@@ -34,6 +34,7 @@
 #include "sde_dbg.h"
 #include "dsi_parser.h"
 #include "dsi_phy.h"
+#include <linux/cpu_suspend.h>
 
 #define to_dsi_display(x) container_of(x, struct dsi_display, host)
 #define INT_BASE_10 10
@@ -1079,12 +1080,14 @@ int dsi_display_set_power(struct drm_connector *connector,
 		rc = dsi_panel_set_lp1(display->panel);
 		msm_drm_notifier_call_chain(MSM_DRM_EVENT_BLANK, &notify_data);
 		screen_off = true;
+		suspend_cpus_aod();
 		break;
 	case SDE_MODE_DPMS_LP2:
 		msm_drm_notifier_call_chain(MSM_DRM_EARLY_EVENT_BLANK, &notify_data);
 		rc = dsi_panel_set_lp2(display->panel);
 		msm_drm_notifier_call_chain(MSM_DRM_EVENT_BLANK, &notify_data);
 		screen_off = true;
+		suspend_cpus_aod();
 		break;
 	case SDE_MODE_DPMS_ON:
 		if (display->panel->power_mode == SDE_MODE_DPMS_LP1 ||
@@ -1093,9 +1096,11 @@ int dsi_display_set_power(struct drm_connector *connector,
 			rc = dsi_panel_set_nolp(display->panel);
 			msm_drm_notifier_call_chain(MSM_DRM_EVENT_BLANK, &notify_data);
 		}
+		activate_cpus();
 		break;
 	case SDE_MODE_DPMS_OFF:
 		screen_off = true;
+		suspend_cpus();
 	default:
 		return rc;
 	}
