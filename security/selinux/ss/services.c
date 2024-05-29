@@ -2123,9 +2123,7 @@ bad:
 	newc->hash = context_compute_hash(s);
 	pr_info("SELinux:  Context %s became invalid (unmapped).\n",
 		newc->str);
-#else
 	context_destroy(newc);
-#endif
 	return 0;
 #else
 	return 0;
