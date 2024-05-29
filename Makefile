@@ -728,9 +728,9 @@ KBUILD_CFLAGS   += -O3
 endif
 
 ifeq ($(cc-name),clang)
-KBUILD_CFLAGS	+= -mllvm -inline-threshold=2500
-KBUILD_CFLAGS	+= -mllvm -inlinehint-threshold=2000
-KBUILD_CFLAGS   += -mllvm -inlinehint-threshold=1200
+KBUILD_CFLAGS	+= -mllvm -inline-threshold=500
+KBUILD_CFLAGS	+= -mllvm -inlinehint-threshold=400
+KBUILD_CFLAGS   += -mllvm -inlinehint-threshold=320
 else ifeq ($(cc-name),gcc)
 KBUILD_CFLAGS	+= --param max-inline-insns-auto=500
 
