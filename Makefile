@@ -741,14 +741,6 @@ KBUILD_CFLAGS	+= --param inline-min-speedup=5
 KBUILD_CFLAGS	+= --param inline-unit-growth=60
 endif
 
-ifeq ($(cc-name),clang)
-# Additional optimizations for better kernel speed
-KBUILD_CFLAGS +=  -fno-semantic-interposition -fno-signed-zeros  -ffinite-math-only -freciprocal-math -fcf-protection=none -fno-trapping-math -fno-math-errno -ffast-math -funroll-loops
-else
-KBUILD_CFLAGS += -fno-trapping-math -fno-math-errno
-KBUILD_CFLAGS +=  -fipa-pta -fipa-sra -frename-registers
-endif
-
 ifdef CONFIG_LLVM_POLLY
 KBUILD_CFLAGS	+= -mllvm -polly \
 		   -mllvm -polly-run-dce \
