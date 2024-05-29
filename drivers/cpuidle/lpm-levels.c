@@ -68,9 +68,6 @@ struct lpm_cluster *lpm_root_node;
 static bool lpm_prediction = true;
 module_param_named(lpm_prediction, lpm_prediction, bool, 0664);
 
-static uint32_t bias_hyst;
-module_param_named(bias_hyst, bias_hyst, uint, 0664);
-
 struct lpm_history {
 	uint32_t resi[MAXSAMPLES];
 	int mode[MAXSAMPLES];
@@ -540,18 +537,6 @@ static void clear_predict_history(void)
 
 static void update_history(struct cpuidle_device *dev, int idx);
 
-static inline bool is_cpu_biased(int cpu, uint64_t *bias_time)
-{
-	u64 now = sched_clock();
-	u64 last = sched_get_cpu_last_busy_time(cpu);
-	u64 diff = 0;
-
-	if (!last)
-		return false;
-
-	return false;
-}
-
 static int cpu_power_select(struct cpuidle_device *dev,
 		struct lpm_cpu *cpu)
 {
@@ -569,7 +554,6 @@ static int cpu_power_select(struct cpuidle_device *dev,
 	uint32_t next_wakeup_us = (uint32_t)sleep_us;
 	uint32_t min_residency, max_residency;
 	struct power_params *pwr_params;
-	uint64_t bias_time = 0;
 
 	if ((sleep_disabled && !cpu_isolated(dev->cpu)) || sleep_us < 0)
 		return best_level;
@@ -577,11 +561,6 @@ static int cpu_power_select(struct cpuidle_device *dev,
 	idx_restrict = cpu->nlevels + 1;
 
 	next_event_us = (uint32_t)(ktime_to_us(get_next_event_time(dev->cpu)));
-
-	if (is_cpu_biased(dev->cpu, &bias_time) && (!cpu_isolated(dev->cpu))) {
-		cpu->bias = bias_time;
-		goto done_select;
-	}
 
 	for (i = 0; i < cpu->nlevels; i++) {
 		bool allow;
