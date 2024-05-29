@@ -366,7 +366,7 @@ static void sbalance_wait(long poll_jiffies)
 	freezer_do_not_count();
 	__set_current_state(TASK_IDLE);
 	timer.task = current;
-	timer_setup_on_stack(&timer.timer, process_timeout, TIMER_DEFERRABLE);
+	init_timer_on_stack_key(&timer.timer, process_timeout, TIMER_DEFERRABLE, NULL);
 	timer.timer.expires = jiffies + poll_jiffies;
 	add_timer(&timer.timer);
 	schedule();
