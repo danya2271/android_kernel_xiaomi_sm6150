@@ -727,14 +727,6 @@ else
 KBUILD_CFLAGS   += -O3
 endif
 
-ifeq ($(cc-name),clang)
-# Additional optimizations for better kernel speed
-KBUILD_CFLAGS +=  -fno-semantic-interposition -fno-signed-zeros  -ffinite-math-only -freciprocal-math -fcf-protection=none -fno-trapping-math -fno-math-errno -ffast-math -funroll-loops
-else
-KBUILD_CFLAGS += -fno-trapping-math -fno-math-errno
-KBUILD_CFLAGS +=  -fipa-pta -fipa-sra -frename-registers
-endif
-
 ifdef CONFIG_LLVM_POLLY
 KBUILD_CFLAGS	+= -mllvm -polly \
 		   -mllvm -polly-run-dce \
