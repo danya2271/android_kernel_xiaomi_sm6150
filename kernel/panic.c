@@ -36,7 +36,7 @@
 #define PANIC_TIMER_STEP 100
 #define PANIC_BLINK_SPD 18
 
-int panic_on_oops = CONFIG_PANIC_ON_OOPS_VALUE;
+int panic_on_oops = 0;
 static unsigned long tainted_mask;
 static int pause_on_oops;
 static int pause_on_oops_flag;
@@ -189,6 +189,7 @@ void check_panic_on_warn(const char *origin)
  */
 void panic(const char *fmt, ...)
 {
+#if 0
 	static char buf[1024];
 	va_list args;
 	long i, i_next = 0;
@@ -375,6 +376,7 @@ void panic(const char *fmt, ...)
 		}
 		mdelay(PANIC_TIMER_STEP);
 	}
+#endif
 }
 
 EXPORT_SYMBOL(panic);
@@ -692,7 +694,7 @@ static int __init oops_setup(char *s)
 	if (!s)
 		return -EINVAL;
 	if (!strcmp(s, "panic"))
-		panic_on_oops = 1;
+		panic_on_oops = 0;
 	return 0;
 }
 early_param("oops", oops_setup);
