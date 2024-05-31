@@ -3709,7 +3709,7 @@ static inline void add_tg_cfs_propagate(struct cfs_rq *cfs_rq, long runnable_sum
 	WRITE_ONCE(*ptr, res);	\
 } while (0)
 
- * Remove and clamp on negative, from a local variable.
+ /* Remove and clamp on negative, from a local variable.
  *
  * A variant of sub_positive(), which does not use explicit load-store
  * and is thus optimized for local variable updates.
