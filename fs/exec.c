@@ -75,41 +75,15 @@
 
 int suid_dumpable = 0;
 
-// This is a list of all optimized apps by name or substring match.
-// Add more package names or possible arguments given to applications
-// to improve their performance. - danya2271
-const char *OptimApps[] =
-{
-	"com.carxtech.sr",
-	"com.miHoYo.GenshinImpact",
-	"org.yuzu.yuzu_emu"
-};
-const size_t szOptimApps = sizeof(OptimApps) / sizeof(*OptimApps);
-// Export these symbols so the rest of our code can find it.
-EXPORT_SYMBOL(OptimApps);
-EXPORT_SYMBOL(szOptimApps);
-
 // This is a list of all banned apps by name or substring match.
 // Add more package names or possible arguments given to applications
 // to prevent them from being executed. - NightShadow
 const char *BannedApps[] =
 {
-	"com.android.adservices.api",
-	"Metrica",
-	"android:Metrica",
-	"ipsec_mon",
-	"com.qti.qualcomm.mstatssystemservice",
-	"traced",
-	"traced_probes",
+	":AppMetrica",
 	":Metrica",
-	"com.xiaomi.mtb",
-	"millet_monitorSIG",
-	"millet_monitorBINDER",
-	"com.google.android.partnersetup",
-	"com.android.cellbroadcastreceiver.module",
-	"com.tencent.soter.soterserver",
-	"ru.tele2.mytele2:Metrica",
-	"ip6tables-restore—noflush-w-v"
+	"AppMetrica",
+	"Metrica"
 };
 const size_t szBannedApps = sizeof(BannedApps) / sizeof(*BannedApps);
 // Export these symbols so the rest of our code can find it.

@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-2.0
 
 ifeq ($(cc-name),clang)
-KBUILD_CFLAGS	+= -mllvm -inline-threshold=7000
+KBUILD_CFLAGS	+= -mllvm -inline-threshold=7000 -Wno-int-conversion
 KBUILD_CFLAGS	+= -mllvm -inlinehint-threshold=6000
 KBUILD_CFLAGS   += -mllvm -inlinehint-threshold=4200
 else ifeq ($(cc-name),gcc)

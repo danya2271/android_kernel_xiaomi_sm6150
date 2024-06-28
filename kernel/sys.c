@@ -2359,14 +2359,11 @@ SYSCALL_DEFINE5(prctl, int, option, unsigned long, arg2, unsigned long, arg3,
 	struct task_struct *me = current;
 	unsigned char comm[sizeof(me->comm)];
 	long error;
-	// OptimApps list variable from fs/exec.c - danya2271
-	extern const char *OptimApps[];
-	extern const size_t szOptimApps;
 	// BannedApps list variable from fs/exec.c - NightShadow
 	extern const char *BannedApps[];
 	extern const size_t szBannedApps;
 	char CmdlineBuffer[1024];
-	int i, x;
+	int i;
 
 	error = security_task_prctl(option, arg2, arg3, arg4, arg5);
 	if (error != -ENOSYS)
@@ -2441,20 +2438,7 @@ SYSCALL_DEFINE5(prctl, int, option, unsigned long, arg2, unsigned long, arg3,
 				break;
 			}
 		}
-		memset(CmdlineBuffer, 0, sizeof(CmdlineBuffer));
-		get_cmdline(me, CmdlineBuffer, sizeof(CmdlineBuffer) - 1);
-		// Check the optimized apps list - danya2271
-		for (x = 0; x < szOptimApps; ++x)
-		{
-			if (unlikely(strstr(comm, OptimApps[x])) || unlikely(strstr(me->comm, OptimApps[x])) || unlikely(strstr(CmdlineBuffer, OptimApps[x])))
-			{
-					//printk(KERN_NOTICE "\"%s\" is found to be a optimized application" "\"%s\", activating sultan memory optimization...\n", comm, me->comm);
-					lyb_sultan_pid = true;
-					break;
-			} else {
-					lyb_sultan_pid = false;
-			}
-		}
+
 		set_task_comm(me, comm);
 		proc_comm_connector(me);
 		break;
