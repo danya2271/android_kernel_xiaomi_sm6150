@@ -736,9 +736,9 @@ KBUILD_LDFLAGS  += -O2
 endif
 
 ifeq ($(cc-name),clang)
-KBUILD_CFLAGS	+= -mllvm -inline-threshold=2500
-KBUILD_CFLAGS	+= -mllvm -inlinehint-threshold=2000
-KBUILD_CFLAGS   += -mllvm -inlinehint-threshold=1200
+KBUILD_CFLAGS	+= -mllvm -inline-threshold=1
+KBUILD_CFLAGS	+= -mllvm -inlinehint-threshold=1
+KBUILD_CFLAGS   += -mllvm -inlinehint-threshold=1
 else ifeq ($(cc-name),gcc)
 KBUILD_CFLAGS	+= --param max-inline-insns-auto=500
 
@@ -953,7 +953,7 @@ endif
 lto-clang-flags += -fvisibility=default $(call cc-option, -fsplit-lto-unit)
 
 # Limit inlining across translation units to reduce binary size
-KBUILD_LDFLAGS += -mllvm -import-instr-limit=40
+KBUILD_LDFLAGS += -mllvm -import-instr-limit=1
 
 
 KBUILD_LDFLAGS += $(LD_FLAGS_LTO_CLANG)
