@@ -811,6 +811,7 @@ KBUILD_CFLAGS += $(call cc-option, -Wno-void-pointer-to-int-cast)
 ifeq ($(shell test $(CONFIG_CLANG_VERSION) -gt 180000; echo $$?),0)
 KBUILD_CFLAGS   += -mllvm -regalloc-enable-advisor=release
 KBUILD_LDFLAGS  += -mllvm -regalloc-enable-advisor=release
+KBUILD_LDFLAGS  += -mllvm -enable-ml-inliner=release
 endif
 # Enable hot cold split optimization
 KBUILD_CFLAGS   += -mllvm -hot-cold-split=true
