@@ -736,7 +736,6 @@ KBUILD_LDFLAGS  += -O2
 endif
 
 ifeq ($(cc-name),clang)
-<<<<<<< HEAD
 KBUILD_CFLAGS	+= -mllvm -inline-threshold=1
 KBUILD_CFLAGS	+= -mllvm -inlinehint-threshold=1
 KBUILD_CFLAGS   += -mllvm -inlinehint-threshold=1
@@ -748,13 +747,6 @@ KBUILD_CFLAGS	+= --param large-stack-frame=1288
 
 KBUILD_CFLAGS	+= --param inline-min-speedup=5
 KBUILD_CFLAGS	+= --param inline-unit-growth=60
-=======
-#Enable fast FMA optimizations
-KBUILD_CFLAGS   += -ffp-contract=fast
-endif
-ifeq ($(cc-name),clang)
-KBUILD_CFLAGS   += -march=armv8.2-a+lse+crypto+dotprod --cuda-path=/dev/null
->>>>>>> 75a092afdd4a (Makefile: Enable mlgo inlining)
 endif
 
 #Enable MLGO
