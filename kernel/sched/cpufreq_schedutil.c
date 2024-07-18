@@ -22,8 +22,8 @@
 
 #define SUGOV_KTHREAD_PRIORITY	50
 
-static unsigned int default_efficient_freq_lp[] = {1612800, 1708800};
-static u64 default_up_delay_lp[] = {3 * NSEC_PER_MSEC, 50 * NSEC_PER_MSEC};
+static unsigned int default_efficient_freq_lp[] = {576400, 1708800};
+static u64 default_up_delay_lp[] = {10 * NSEC_PER_MSEC, 50 * NSEC_PER_MSEC};
 
 static unsigned int default_efficient_freq_hp[] = {806400, 1209600};
 static u64 default_up_delay_hp[] = {3 * NSEC_PER_MSEC, 6 * NSEC_PER_MSEC};
