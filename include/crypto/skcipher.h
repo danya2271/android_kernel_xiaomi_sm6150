@@ -139,6 +139,8 @@ struct skcipher_alg {
 	struct crypto_alg base;
 };
 
+#define MAX_SYNC_SKCIPHER_REQSIZE      384
+
 #define SKCIPHER_REQUEST_ON_STACK(name, tfm) \
 	char __##name##_desc[sizeof(struct skcipher_request) + \
 		crypto_skcipher_reqsize(tfm)] CRYPTO_MINALIGN_ATTR; \

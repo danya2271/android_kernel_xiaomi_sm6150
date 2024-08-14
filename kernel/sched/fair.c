@@ -194,8 +194,9 @@ unsigned int sched_capacity_margin_down[NR_CPUS] = {
 unsigned int sysctl_sched_min_task_util_for_boost = 51;
 /* 0.68ms default for 20ms window size scaled to 1024 */
 unsigned int sysctl_sched_min_task_util_for_colocation = 35;
-__read_mostly unsigned int sysctl_sched_prefer_spread;
 #endif
+__read_mostly unsigned int sysctl_sched_prefer_spread;
+
 static unsigned int __maybe_unused sched_small_task_threshold = 102;
 __read_mostly unsigned int sysctl_sched_force_lb_enable = 1;
 
@@ -3907,7 +3908,7 @@ static inline void update_load_avg(struct cfs_rq *cfs_rq, struct sched_entity *s
 	if (se->avg.last_update_time && !(flags & SKIP_AGE_LOAD))
 		__update_load_avg_se(now, cpu, cfs_rq, se);
 
-	decayed  = update_cfs_rq_load_avg(now, cfs_rq);
+	decayed  = update_cfs_rq_load_avg(now, cfs_rq, true);
 	decayed |= propagate_entity_load_avg(se);
 
 	if (!se->avg.last_update_time && (flags & DO_ATTACH)) {
@@ -4445,7 +4446,7 @@ dequeue_entity(struct cfs_rq *cfs_rq, struct sched_entity *se, int flags)
 	update_flags = UPDATE_TG;
 
 	if (flags & DEQUEUE_IDLE)
-		update_flags |= SKIP_CPUFREQ;
+		update_flags |= DO_ATTACH;
 
 	update_load_avg(cfs_rq, se, update_flags);
 	dequeue_runnable_load_avg(cfs_rq, se);
@@ -11599,12 +11600,17 @@ static int load_balance(int this_cpu, struct rq *this_rq,
 		.flags			= 0,
 		.loop			= 0,
 	};
-
+#ifdef CONFIG_SCHED_WALT
 	env.prefer_spread = (idle != CPU_NOT_IDLE &&
 				prefer_spread_on_idle(this_cpu) &&
 				!((sd->flags & SD_ASYM_CPUCAPACITY) &&
 				 !cpumask_test_cpu(this_cpu,
 						 &asym_cap_sibling_cpus)));
+#else
+	env.prefer_spread = (idle != CPU_NOT_IDLE &&
+	prefer_spread_on_idle(this_cpu) &&
+	!((sd->flags & SD_ASYM_CPUCAPACITY)));
+#endif
 
 	cpumask_and(cpus, sched_domain_span(sd), cpu_active_mask);
 
@@ -12038,11 +12044,16 @@ static int idle_balance(struct rq *this_rq, struct rq_flags *rf)
 				update_group_capacity(sd, this_cpu);
 			continue;
 		}
-
+#ifdef CONFIG_SCHED_WALT
 		if (prefer_spread && !force_lb &&
 			(sd->flags & SD_ASYM_CPUCAPACITY) &&
 			!(cpumask_test_cpu(this_cpu, &asym_cap_sibling_cpus)))
 			avg_idle = this_rq->avg_idle;
+#else
+		if (prefer_spread && !force_lb &&
+			(sd->flags & SD_ASYM_CPUCAPACITY))
+			avg_idle = this_rq->avg_idle;
+#endif
 
 		if (avg_idle < curr_cost + sd->max_newidle_lb_cost) {
 			update_next_balance(sd, &next_balance);

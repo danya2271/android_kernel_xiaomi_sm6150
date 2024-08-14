@@ -162,6 +162,8 @@ extern int overcommit_kbytes_handler(struct ctl_table *, int, void __user *,
 
 extern struct kmem_cache *vm_area_cachep;
 
+void vm_area_free(struct vm_area_struct *);
+
 #ifndef CONFIG_MMU
 extern struct rb_root nommu_region_tree;
 extern struct rw_semaphore nommu_region_sem;
