@@ -770,7 +770,7 @@ static int rpmh_arc_votes_init(struct kgsl_device *device,
 
 		/* Values from OPP framework are offset by 1 */
 		vlvl_tbl[i] = dev_pm_opp_get_voltage(opp)
-				- RPMH_REGULATOR_LEVEL_OFFSET;
+				- 30;
 		dev_pm_opp_put(opp);
 	}
 
