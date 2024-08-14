@@ -46,6 +46,8 @@
 #include <linux/cpufreq.h>
 #include <linux/pm_wakeup.h>
 #include <drm/drm_bridge.h>
+#include <linux/cpu_input_boost.h>
+#include <linux/devfreq_boost.h>
 #ifndef GOODIX_DRM_INTERFACE_WA
 #include <linux/msm_drm_notify.h>
 #endif
@@ -429,6 +431,8 @@ static long gf_ioctl(struct file *filp, unsigned int cmd, unsigned long arg)
 			break;
 
 		case GF_IOC_RESET:
+			devfreq_boost_kick_max(DEVFREQ_CPU_CPU_LLCC_BW, 1300);
+			cpu_input_boost_kick_max(1300);
 			pr_debug("%s GF_IOC_RESET.\n", __func__);
 			gf_hw_reset(gf_dev, 3);
 			break;
