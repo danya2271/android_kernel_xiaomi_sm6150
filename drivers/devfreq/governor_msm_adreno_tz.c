@@ -23,6 +23,7 @@
 #include <asm/cacheflush.h>
 #include <soc/qcom/scm.h>
 #include "governor.h"
+#include "../gpu/msm/gpu_input.h"
 
 static DEFINE_SPINLOCK(tz_lock);
 static DEFINE_SPINLOCK(sample_lock);
@@ -406,6 +407,11 @@ static int tz_get_target_freq(struct devfreq *devfreq, unsigned long *freq)
 		level = max(level, 0);
 		level = min_t(int, level, devfreq->profile->max_state - 1);
 	}
+
+	if (boost_adjust_notify() == 1)
+		level = input_boost_level;
+	else if (boost_adjust_notify() == 2)
+		level = 0;
 
 	*freq = devfreq->profile->freq_table[level];
 	return 0;
