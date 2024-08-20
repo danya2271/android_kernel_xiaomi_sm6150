@@ -191,6 +191,7 @@ static int cpu_notifier_cb(struct notifier_block *nb, unsigned long action,
 	/* Unboost when the screen is off */
 	if (test_bit(SCREEN_OFF, &b->state)) {
 		policy->min = policy->cpuinfo.min_freq;
+		policy->max = policy->cpuinfo.min_freq;
 		return NOTIFY_OK;
 	}
 
