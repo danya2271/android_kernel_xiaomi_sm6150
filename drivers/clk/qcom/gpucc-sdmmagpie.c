@@ -52,11 +52,11 @@ enum vdd_gx_levels {
 
 static int vdd_gx_corner[] = {
 	0 + 1,				/* VDD_GX_NONE */
-	24 + 1,				/* VDD_GX_MIN */
-	48 + 1,				/* VDD_GX_LOWER */
-	94 + 1,				/* VDD_GX_LOW */
-	200 + 1,			/* VDD_GX_NOMINAL */
-	280 + 1,			/* VDD_GX_HIGH */
+	4 + 1,				/* VDD_GX_MIN */
+	36 + 1,				/* VDD_GX_LOWER */
+	68 + 1,				/* VDD_GX_LOW */
+	160 + 1,			/* VDD_GX_NOMINAL */
+	240 + 1,			/* VDD_GX_HIGH */
 	300 + 1,			/* VDD_GX_HIGH_L1 */
 	RPMH_REGULATOR_LEVEL_MAX,	/* VDD_GX_MAX */
 };
