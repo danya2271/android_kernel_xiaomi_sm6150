@@ -52,12 +52,17 @@ unsigned long cass_cpu_util(int cpu, bool sync)
 /* Returns true if @a is a better CPU than @b */
 static __always_inline
 bool cass_cpu_better(const struct cass_cpu_cand *a,
-		     const struct cass_cpu_cand *b,
+		     const struct cass_cpu_cand *b, unsigned long p_util,
 		     int prev_cpu, bool sync)
 {
 #define cass_cmp(a, b) ({ res = (a) - (b); })
 #define cass_eq(a, b) ({ res = (a) == (b); })
 	long res;
+
+	/* Prefer the CPU that fits the task */
+	if (cass_cmp(fits_capacity(p_util, a->cap_max),
+		     fits_capacity(p_util, b->cap_max)))
+		goto done;
 
 	/* Prefer the CPU with lower relative utilization */
 	if (cass_cmp(b->util, a->util))
@@ -172,7 +177,7 @@ static int cass_best_cpu(struct task_struct *p, int prev_cpu, bool sync)
 		 */
 		curr->cpu = cpu;
 		if (best == curr ||
-		    cass_cpu_better(curr, best, prev_cpu, sync)) {
+		    cass_cpu_better(curr, best, p_util, prev_cpu, sync)) {
 			best = curr;
 			cidx ^= 1;
 		}
