@@ -4,9 +4,7 @@
 #
 
 # Inlining optimization
-KBUILD_CFLAGS  += -mllvm -inline-threshold=9800
-KBUILD_CFLAGS  += -mllvm -inlinehint-threshold=7500
-KBUILD_CFLAGS   += -mllvm -inlinehint-threshold=8000
+KBUILD_CFLAGS  += -mllvm -inline-instr-cost=28
 
 ccflags-y += -I$(srctree)/drivers/soc/qcom/
 
