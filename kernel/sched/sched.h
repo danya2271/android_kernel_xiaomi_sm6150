@@ -812,6 +812,9 @@ struct rq {
 #ifdef CONFIG_NO_HZ_FULL
 	unsigned long last_sched_tick;
 #endif
+	struct sched_avg	avg_rt;
+	struct sched_avg	avg_dl;
+	struct sched_avg	avg_irq;
 	/* capture load from *all* tasks on this cpu: */
 	struct load_weight load;
 	unsigned long nr_load_updates;
@@ -2086,6 +2089,16 @@ static inline unsigned long cpu_util_cum(int cpu, int delta)
 		return 0;
 
 	return (delta >= capacity) ? capacity : delta;
+}
+
+static inline unsigned long cpu_util_dl(struct rq *rq)
+{
+	return READ_ONCE(rq->avg_dl.util_avg);
+}
+
+static inline unsigned long cpu_util_irq(struct rq *rq)
+{
+	return 0;
 }
 
 static inline unsigned long cpu_util_rt(int cpu)
