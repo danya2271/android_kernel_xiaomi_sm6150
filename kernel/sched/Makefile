@@ -2,7 +2,6 @@
 KBUILD_CFLAGS  += -mllvm -inline-threshold=9800
 KBUILD_CFLAGS  += -mllvm -inlinehint-threshold=7500
 KBUILD_CFLAGS  += -mllvm -inline-instr-cost=1
-KBUILD_CFLAGS  += -Wno-int-conversion
 ifdef CONFIG_FUNCTION_TRACER
 CFLAGS_REMOVE_clock.o = $(CC_FLAGS_FTRACE)
 endif
