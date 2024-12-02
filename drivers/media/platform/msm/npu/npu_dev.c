@@ -2228,8 +2228,6 @@ static int npu_probe(struct platform_device *pdev)
 	if (rc)
 		goto error_driver_init;
 
-	npu_debugfs_init(npu_dev);
-
 	npu_dev->smmu_ctx.attach_cnt = 0;
 	npu_dev->smmu_ctx.mmu_mapping = arm_iommu_create_mapping(
 		pdev->dev.bus, DDR_MAPPED_START_ADDR, DDR_MAPPED_SIZE);
@@ -2285,7 +2283,6 @@ static int npu_remove(struct platform_device *pdev)
 	npu_host_deinit(npu_dev);
 	arm_iommu_detach_device(&(npu_dev->pdev->dev));
 	arm_iommu_release_mapping(npu_dev->smmu_ctx.mmu_mapping);
-	npu_debugfs_deinit(npu_dev);
 	npu_cdsprm_cxlimit_deinit(npu_dev);
 	if (npu_dev->tcdev)
 		thermal_cooling_device_unregister(npu_dev->tcdev);

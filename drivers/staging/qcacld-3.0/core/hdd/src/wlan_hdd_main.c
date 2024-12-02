@@ -15476,7 +15476,6 @@ int hdd_init(void)
 	wlan_logging_sock_init_svc();
 #endif
 
-	hdd_trace_init();
 	hdd_register_debug_callback();
 	wlan_roam_debug_init();
 
