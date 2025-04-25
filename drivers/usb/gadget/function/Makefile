@@ -2,7 +2,7 @@
 #
 # USB peripheral controller drivers
 #
-
+KBUILD_CFLAGS 			+= -Wno-unused-variable
 ccflags-y			:= -I$(srctree)/drivers/usb/gadget/
 ccflags-y			+= -I$(srctree)/drivers/usb/gadget/udc/
 
