@@ -1546,18 +1546,6 @@ static int __init get_android_boot_dev(char *str)
 __setup("androidboot.bootdevice=", get_android_boot_dev);
 #endif
 
-/*
- * ufs_qcom_parse_lpm - read from DTS whether LPM modes should be disabled.
- */
-static void ufs_qcom_parse_lpm(struct ufs_qcom_host *host)
-{
-	struct device_node *node = host->hba->dev->of_node;
-
-	host->disable_lpm = false;
-	if (host->disable_lpm)
-		pr_info("%s: will disable all LPM modes\n", __func__);
-}
-
 static int ufs_qcom_parse_reg_info(struct ufs_qcom_host *host, char *name,
 				   struct ufs_vreg **out_vreg)
 {
@@ -1772,9 +1760,6 @@ static int ufs_qcom_init(struct ufs_hba *hba)
 	if (err)
 		goto out_set_load_vccq_parent;
 
-	ufs_qcom_parse_lpm(host);
-	if (host->disable_lpm)
-		pm_runtime_forbid(host->hba->dev);
 	ufs_qcom_set_caps(hba);
 	ufs_qcom_advertise_quirks(hba);
 
